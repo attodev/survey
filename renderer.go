@@ -110,10 +110,12 @@ func (r *Renderer) resetPrompt(lines int) {
 	cursor := r.NewCursor()
 	cursor.HorizontalAbsolute(0)
 	terminal.EraseLine(r.stdio.Out, terminal.ERASE_LINE_ALL)
+	fmt.Fprint(r.stdio.Out, "\r")
 	// clean up what we left behind last time
 	for i := 0; i < lines; i++ {
 		cursor.PreviousLine(1)
 		terminal.EraseLine(r.stdio.Out, terminal.ERASE_LINE_ALL)
+		fmt.Fprint(r.stdio.Out, "\r")
 	}
 }
 
