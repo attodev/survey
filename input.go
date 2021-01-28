@@ -1,8 +1,8 @@
 package survey
 
 import (
-	"github.com/AlecAivazis/survey/v2/core"
-	"github.com/AlecAivazis/survey/v2/terminal"
+	"github.com/attodev/survey/v2/core"
+	"github.com/attodev/survey/v2/terminal"
 )
 
 /*
