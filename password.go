@@ -46,7 +46,7 @@ func (p *Password) Prompt(config *PromptConfig) (interface{}, error) {
 	)
 	fmt.Fprint(terminal.NewAnsiStdout(p.Stdio().Out), userOut)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	rr := p.NewRuneReader()
@@ -56,7 +56,7 @@ func (p *Password) Prompt(config *PromptConfig) (interface{}, error) {
 	// no help msg?  Just return any response
 	if p.Help == "" {
 		line, err := rr.ReadLine('*')
-		return string(line), err
+		return line, err
 	}
 
 	cursor := p.NewCursor()
@@ -66,7 +66,7 @@ func (p *Password) Prompt(config *PromptConfig) (interface{}, error) {
 	for {
 		line, err = rr.ReadLine('*')
 		if err != nil {
-			return string(line), err
+			return line, err
 		}
 
 		if string(line) == config.HelpInput {
@@ -82,7 +82,7 @@ func (p *Password) Prompt(config *PromptConfig) (interface{}, error) {
 				},
 			)
 			if err != nil {
-				return "", err
+				return nil, err
 			}
 			continue
 		}
@@ -90,9 +90,8 @@ func (p *Password) Prompt(config *PromptConfig) (interface{}, error) {
 		break
 	}
 
-	lineStr := string(line)
-	p.AppendRenderedText(strings.Repeat("*", len(lineStr)))
-	return lineStr, err
+	p.AppendRenderedText(strings.Repeat("*", len(line)))
+	return line, err
 }
 
 // Cleanup hides the string with a fixed number of characters.
