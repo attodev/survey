@@ -56,7 +56,7 @@ func (p *Password) Prompt(config *PromptConfig) (interface{}, error) {
 	// no help msg?  Just return any response
 	if p.Help == "" {
 		line, err := rr.ReadLine('*')
-		return line, err
+		return []byte(string(line)), err
 	}
 
 	cursor := p.NewCursor()
@@ -66,7 +66,7 @@ func (p *Password) Prompt(config *PromptConfig) (interface{}, error) {
 	for {
 		line, err = rr.ReadLine('*')
 		if err != nil {
-			return line, err
+			return []byte(string(line)), err
 		}
 
 		if string(line) == config.HelpInput {
@@ -91,7 +91,7 @@ func (p *Password) Prompt(config *PromptConfig) (interface{}, error) {
 	}
 
 	p.AppendRenderedText(strings.Repeat("*", len(line)))
-	return line, err
+	return []byte(string(line)), err
 }
 
 // Cleanup hides the string with a fixed number of characters.
